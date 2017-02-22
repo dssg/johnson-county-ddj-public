@@ -1,0 +1,33 @@
+PGHOST: "example.com"
+PGUSER: "janedoe"
+PGPASSWORD: "supersecretpassword"
+PGDATABASE: "example"
+PGPORT: 6969
+
+# This path should always point to itself
+DBSETUP: "pipeline/example_default_profile.yaml"
+
+#########################
+#    Table names        #
+#########################
+
+# name of id column shared across all dbs for individuals
+# This should be an ssn, hashed ssn, or artificial id assigned for individuals
+id_column: "id_col"
+
+# This tables depend on which features you want to include
+table1: "schema1.table1"
+table2: "schema1.table2"
+table3: "schema2.table3"
+
+# this table contains a minimum of three columns:
+# id_column, event, begin_date
+# Note, depending on your features this can contain more features such as end_date
+personid_event_dates: "schema_n:personid_event_date_name"
+
+# table to save models and predictions in
+models: model_table_name
+predictions: predictions_table_name
+
+# schema where feature tables will be saved
+feature_schema: feature_table_schema_name

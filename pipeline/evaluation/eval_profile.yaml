@@ -1,0 +1,21 @@
+# Enter below the thresholds you would like to use for evaluating models.
+# Relative thresholds refer to percents (e.g., precision at 1%).
+# Absolute thresholds refer to numbers of people (e.g., precision at 100 people)
+# For each threshold type, the _end value should be one increment ABOVE the last
+# threshold you want evaluated.
+
+
+#######################
+# RELATIVE THRESHOLDS #
+#######################
+relative_threshold_begin: 0
+relative_threshold_end: 101
+relative_threshold_increment: 1
+
+#######################
+# ABSOLUTE THRESHOLDS #
+#######################
+absolute_threshold_begin: 0
+absolute_threshold_end: 2525
+absolute_threshold_increment: 25
+

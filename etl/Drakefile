@@ -1,0 +1,54 @@
+CLEANINGFILES:=etl/data_cleaning
+
+; Unzip the latest datasource
+/mnt/data/johnson_county/raw/jocodssg.sql <- /mnt/data/johnson_county/raw/jocodssg_08042016.zip
+	unzip $[INPUT] -d /mnt/data/johnson_county/raw  && touch $[OUTPUT]
+
+; Restore the sql dump to the postgres database
+/mnt/data/johnson_county/raw/drake_checkfiles/jocodssg_upload <- /mnt/data/johnson_county/raw/jocodssg.sql
+	psql -f $[INPUT0] && touch $[OUTPUT]
+
+; Run all the cleaning sql scripts
+/mnt/data/johnson_county/raw/drake_checkfiles/jocojimsperson_hashed <- $[CLEANINGFILES]/clean_jocojimsperson_hashed.sql
+	psql -f $[INPUT0] && touch $[OUTPUT]
+
+/mnt/data/johnson_county/raw/drake_checkfiles/jocojimsjailbooking_hashed <- $[CLEANINGFILES]/clean_jocojimsjailbooking_hashed.sql
+	psql -f $[INPUT0] && touch $[OUTPUT]
+
+/mnt/data/johnson_county/raw/drake_checkfiles/jocojimscurrentcharges_hashed <- $[CLEANINGFILES]/clean_jocojimscurrentcharges_hashed.sql
+	psql -f $[INPUT0] && touch $[OUTPUT]
+
+/mnt/data/johnson_county/raw/drake_checkfiles/jocojims2bailmstdefinfo <- $[CLEANINGFILES]/clean_jocojims2bailmstdefinfo.sql
+	psql -f $[INPUT0] && touch $[OUTPUT]
+
+/mnt/data/johnson_county/raw/drake_checkfiles/jocojims2inmatedata <- $[CLEANINGFILES]/clean_jocojims2inmatedata.sql
+	psql -f $[INPUT0] && touch $[OUTPUT]
+
+/mnt/data/johnson_county/raw/drake_checkfiles/jocojims2juvinmatedata <- $[CLEANINGFILES]/clean_jocojims2juvinmatedata.sql
+	psql -f $[INPUT0] && touch $[OUTPUT]
+
+/mnt/data/johnson_county/raw/drake_checkfiles/jocojims2nameindexdata <- $[CLEANINGFILES]/clean_jocojims2nameindexdata.sql
+	psql -f $[INPUT0] && touch $[OUTPUT]
+
+/mnt/data/johnson_county/raw/drake_checkfiles/jocojims2probation <- $[CLEANINGFILES]/clean_jocojims2probation.sql
+	psql -f $[INPUT0] && touch $[OUTPUT]
+
+/mnt/data/johnson_county/raw/drake_checkfiles/jocomentalhealth_hashed <- $[CLEANINGFILES]/clean_jocomentalhealth_hashed.sql
+	psql -f $[INPUT0] && touch $[OUTPUT]
+
+/mnt/data/johnson_county/raw/drake_checkfiles/jocomentalhealthdiagnoses <- $[CLEANINGFILES]/clean_jocomentalhealthdiagnoses.sql
+	psql -f $[INPUT0] && touch $[OUTPUT]
+
+/mnt/data/johnson_county/raw/drake_checkfiles/jocomentalhealthdischarges <- $[CLEANINGFILES]/clean_jocomentalhealthdischarges.sql
+	psql -f $[INPUT0] && touch $[OUTPUT]
+
+/mnt/data/johnson_county/raw/drake_checkfiles/jocomentalhealthservices <- $[CLEANINGFILES]/clean_jocomentalhealthservices.sql
+	psql -f $[INPUT0] && touch $[OUTPUT]
+
+/mnt/data/johnson_county/raw/drake_checkfiles/jocorsitriage_hashed <- $[CLEANINGFILES]/clean_jocorsitriage_hashed.sql
+	psql -f $[INPUT0] && touch $[OUTPUT]
+
+/mnt/data/johnson_county/raw/drake_checkfiles/jocoems_hashed <- $[CLEANINGFILES]/clean_jocoems_hashed.sql
+	psql -f $[INPUT0] && touch $[OUTPUT]
+
+

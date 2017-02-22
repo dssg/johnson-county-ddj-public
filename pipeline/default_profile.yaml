@@ -1,0 +1,30 @@
+
+db_connection_config_path: "/mnt/data/criminal_justice/johnson_county_ddj/config/db_default_profile.json"
+DBSETUP: "pipeline/default_profile.yaml"
+
+#########################
+#    Table names        #
+#########################
+
+id_column: "dedupe_id"
+
+jimsperson: "clean.jocojims2nameindexdata"
+ems: "clean.jocoems_hashed"
+mental_health: "clean.jocomentalhealth_hashed"
+mental_health_diagnoses: "clean.jocomentalhealthdiagnoses"
+personid_event_dates: "clean.canonical_events"
+jimsbooking: "clean.jocojims2inmatedata"
+rsitriage: "clean.jocorsitriage_hashed"
+mental_health_services: "clean.jocomentalhealthservices"
+mental_health_dschg: "clean.jocomentalhealthdischarges"
+jimsbail: "clean.jocojimsbailtable"
+jimscase: "clean.jocojimscasetable"
+individuals: "clean.individuals"
+
+
+
+
+models: models
+predictions: predictions
+
+feature_schema: feature_tables

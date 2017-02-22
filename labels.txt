@@ -1,0 +1,11 @@
+anything_jims - predicting jail booking for anyone who has touched any system
+ems_mh_jims - predicting jail booking for people who have had both an ems call and a mental health entry but who have never been booked
+jims_mh_jims - predicting jail booking for people who have been booked before and have had a mental health entry but who have never called EMS
+ems_mh - predicting mental health entry for people who have made an EMS call but have never been booked or entered mental health before
+ems_ems - predicting an EMS call for people who have previously called EMS but have never been booked or entered mental health before
+jims_jims - predicting jail booking for people who have been booked before but have never called ems or entered mental health before
+mh_ems - predicint EMS call for people who have entered mental health but have never been booked or called EMS before
+ems_jims_mh - predicting mental health entry for people who have called EMS and been booked but never been to mental health before
+mh_jims - predicting jail booking for people who have been to mental health but have never been booked or called EMS
+ems_jims - predicting jail booking for people who have called EMS but have never been to jail or mental health
+jims_mh_ems_jims - predicting jail booking for people who have called ems, been booked, and gone to mental health

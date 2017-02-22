@@ -1,0 +1,266 @@
+#################################
+# UChicago JoCo Public Service  #
+#     Model experiments         #
+#################################
+
+
+#################################
+# Type of Experiment            #
+#################################
+
+unit: 'person'
+pilot: False
+
+#################################
+# Temporal parameters           #
+#################################
+
+start_date: '01Jan2010'
+autogen_fake_today: False
+
+fake_today: ['01Jan2015']
+prediction_window: [365]
+
+
+###############################
+# Labelling Details           #
+###############################
+
+labelling:
+  ems_jims: False
+  mh_jims: False
+  ems_mh_jims: False
+  ems_ems: False
+  mh_ems: False
+  ems_mh: False
+  jims_mh_jims: True
+  jims_jims: False
+  anything_jims: False
+  jims_mh_ems_jims: False
+  jims_mh__ems__jims: False
+
+#################################
+# Feature Selection             #
+#################################
+test_feature_group_combinations: False
+
+feature_groups: ['basic','service_counts','last_week_service_counts', 'last_year_service_counts',
+ 'last_year_service_days','ems_features' , 'lengths_between_events', 'last_month_service_counts',
+ 'intersections_services', 'age_interaction', 'mental_health_features', 'rsi_features', 'jims_features']
+
+
+features:
+  basic:
+    gender: True
+    race: True
+    age: True
+    age_years: True
+    age_discrete: True
+
+  service_counts:
+    ems_counts: True
+    jims_counts: True
+    mh_counts: True
+
+  last_week_service_counts:
+    last_week_ems_count: True
+    last_week_mh_count: True
+    last_week_jims_count: True
+
+  last_month_service_counts:
+    last_month_ems_count: True
+    last_month_mh_count: True
+    last_month_jims_count: True
+
+  last_year_service_counts:
+    last_year_ems_count: True
+    last_year_mh_count: True
+    last_year_jims_count: True
+
+#needs to be checked
+  last_year_service_days:
+    last_year_mh_days_sum: True
+    last_year_mh_days_avg: True
+    last_year_mh_days_stddev: True
+    last_year_jail_days_sum: True
+    last_year_jail_days_avg: True
+    last_year_jail_days_stddev: True
+
+  ems_features:
+    ems_triage: True
+    homelessness: True
+    treated_sum: True
+    transported_sum: True
+    destination: True
+    primary_impression: True
+    ems_num_different_rescity: True
+    ems_refused_care_count: True
+    ems_refused_transport_count: True
+    ems_treated_transffered_count: True
+    ems_transported_law_enforement_count: True
+    ems_no_treatment_count: True
+    ems_als_count: True
+    ems_bls_count: True
+
+  lengths_between_events:
+    avg_length_between_event: True
+    std_length_between_event: True
+
+  intersections_services:
+    intersections_of_public_services: True
+
+  age_interaction:
+    age_first_interaction_public_service: True
+    age_first_interaction_public_service_years: True
+    age_last_interaction_public_service: True
+    age_first_interaction_public_service_discrete: True
+    age_last_interaction_public_service_years: True
+    age_last_interaction_public_service_discrete: True
+
+
+  mental_health_features:
+    mental_health_diagnoses: True
+    mental_health_referral_source: True
+    mental_health_program: True
+    mh_diagnoses: True
+    mh_num_services: True
+    mh_unique_num_services: True
+    mh_discharge_reason: True
+    mh_number_therapists: True
+    mh_services_recieved: True
+    mh_most_common_therapist: True
+    mh_program_discharges: True
+
+  jims_features:
+    avg_bail_amt: True
+    avg_bail_amt_last_year: True
+    avg_bail_amt_last_month: True
+    avg_bail_amt_last_week: True
+    bail_type_count: True
+    bail_type_count_last_year: True
+    bail_type_count_last_month: True
+    bail_type_count_last_week: True
+    case_type_count: True
+    case_type_count_last_year: True
+    case_type_count_last_month: True
+    case_type_count_last_week: True
+    arresting_agency_type_count: True
+    bailed_out_count: True
+
+  rsi_features:
+    rsi_count: True
+    rsi_avg_interval_in_and_out: True
+    rsi_residence_recorded_most: True
+    rsi_num_transported_by: True
+
+  sequence_exists:
+    booking_ems_365: True
+    ems_ems_ems_365: True
+    ems_mh_365: True
+    mh_ems_365: True
+    mh_mh_365: True
+    ems_ems_365: True
+    ems_booking_365: True
+    booking_booking_365: True
+    ems_ems_ems_ems_365: True
+    mh_booking_365: True
+    ems_ems_182: True
+    ems_booking_182: True
+    booking_ems_182: True
+    ems_ems_ems_182: True
+    booking_booking_182: True
+    ems_mh_182: True
+    ems_ems_ems_ems_182: True
+    booking_mh_182: True
+    mh_mh_182: True
+    mh_ems_182: True
+    mh_booking_182: True
+    ems_ems_90: True
+    booking_ems_90: True
+    booking_booking_90: True
+    ems_ems_ems_90: True
+    ems_mh_90: True
+    ems_ems_ems_ems_90: True
+    mh_ems_90: True
+    mh_booking_90: True
+    mh_mh_90: True
+    ems_ems_mh_90: True
+    ems_ems_30: True
+    booking_ems_30: True
+    ems_booking_30: True
+    ems_ems_ems_30: True
+    ems_ems_7: True
+    booking_ems_7: True
+
+#################################
+#       Model selection         #
+#################################
+
+randomize_model_run_order: True
+
+model: ['ExtraTreesClassifier']
+
+parameters:
+
+    LogisticRegression:
+        random_state: [339,785,807]
+        C: [0.00001,0.0001,0.001,0.01,0.1,1,10]
+        penalty: ['l1','l2']
+
+    linear.SVC:
+        C: [0.00001,0.0001,0.001,0.01,0.1,1,10]
+
+
+    RandomForestClassifier:
+        random_state: [339,785,807]
+        n_estimators: [1,10,100,1000,10000]
+        max_depth: [1,5,10,20,50,100]
+        max_features: ['sqrt','log2']
+        min_samples_split: [2,5,10]
+
+    KNeighborsClassifier:
+        n_neighbors: [1,5,10,25,50,100]
+        weights: ['uniform','distance']
+        algorithm: ['auto','ball_tree','kd_tree']
+
+    DecisionTreeClassifier:
+        random_state: [339,785,807]
+        criterion: ['gini', 'entropy']
+        max_depth: [1,5,10,20,50,100]
+        max_features: ['sqrt','log2']
+        min_samples_split: [2,5,10]
+
+
+    GradientBoostingClassifier:
+        random_state: [339,785,807]
+        n_estimators: [1,10,100,1000,10000]
+        learning_rate: [0.001,0.01,0.05,0.1,0.5]
+        subsample: [0.1,0.5,1.0]
+        max_depth: [1,3,5,10,20,50,100]
+
+    AdaBoostClassifier:
+        random_state: [339,785,807]
+        algorithm: ['SAMME', 'SAMME.R']
+        n_estimators: [1,10,100,1000,10000]
+
+    SGDClassifier:
+        random_state: [339,785,807]
+        loss: ['hinge','log','perceptron']
+        penalty: ['l2','l1','elasticnet']
+
+    ExtraTreesClassifier:
+        random_state: [339,785,807]
+        n_estimators: [1,10,100,1000,10000]
+        criterion: ['gini', 'entropy']
+        max_depth: [1,5,10,20,50,100]
+        max_features: ['sqrt','log2']
+        min_samples_split: [2,5,10]
+
+
+#################################
+#       Output file details     #
+#################################
+
+directory: 'results/'
+pkl_prefix: 'joco_results'
+class_map_dictionary_directory: 'pipeline/classmap_dictionaries/'
