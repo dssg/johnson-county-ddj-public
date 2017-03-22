@@ -1,0 +1,4 @@
+{"host":"database.host.url",
+"user":"database_username",
+"database":"name_of_database",
+"password":"database_password"}

@@ -1,8 +1,5 @@
-PGHOST: "example.com"
-PGUSER: "janedoe"
-PGPASSWORD: "supersecretpassword"
-PGDATABASE: "example"
-PGPORT: 6969
+# this is the path to the database profile containing login information
+db_connection_config_path: "../example_database_profile.json"
 
 # This path should always point to itself
 DBSETUP: "pipeline/example_default_profile.yaml"

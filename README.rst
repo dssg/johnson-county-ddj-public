@@ -107,22 +107,22 @@ Initial setup is performed via two configuration files, one that
 contains database credentials, and one that contains configuration
 unique to the public service data
 
--  Database credentials are stored in a YAML file
-   ``default_profile.yaml`` in the root directory ``pipeline/``. Use
+-  Database credentials are stored in a JSON file in the main directory of the
+   repository. See ``example_database_profile.json`` for a template.
+-  The file ``default_profile.yaml`` in the root directory ``pipeline/``
+   contains additional database configuration information, specifying the names
+   of tables to use for feature generation and results storage. Use
    ``example_default_profile.yaml`` as a template::
 
-    PGHOST: "example.com"
-	PGUSER: "janedoe"
-	PGPASSWORD: "supersecretpassword"
-	PGDATABASE: "example"
-	PGPORT: 6969
+    # this is the path to the database profile containing login information
+    db_connection_config_path: "../example_database_profile.json"
 
-	# This path should always point to itself
-	DBSETUP: "pipeline/example_default_profile.yaml"
+    # This path should always point to itself
+    DBSETUP: "pipeline/example_default_profile.yaml"
 
-	#########################
-	#    Table names        #
-	#########################
+    #########################
+    #    Table names        #
+    #########################
 
 	# name of id column shared across all dbs for individuals
 	# This should be an ssn, hashed ssn, or artificial id assigned for individuals
@@ -164,8 +164,8 @@ using ``tmux``.
 Issues
 ------
 
-Please use `Github's issue
-tracker <https://github.com/dssg/johnson-county-ddj-public/issues>`__
+Please use [Github's issue
+tracker]<https://github.com/dssg/johnson-county-ddj-public/issues>
 
 Contributors
 ------------
