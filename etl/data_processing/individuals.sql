@@ -6,6 +6,7 @@ CREATE TABLE clean.individuals AS (
         mode() WITHIN GROUP (ORDER BY hash_ssn) AS hash_ssn,
         mode() WITHIN GROUP (ORDER BY hash_lname) AS hash_lname,
         mode() WITHIN GROUP (ORDER BY hash_fname) AS hash_fname,
-        mode() WITHIN GROUP (ORDER BY race) AS race,
-        mode() WITHIN GROUP (ORDER BY sex) AS sex
+        mode() WITHIN GROUP (ORDER BY sex) AS sex,
+        mode() WITHIN GROUP (ORDER BY dob) AS dob,
+        mode() WITHIN GROUP (ORDER BY race) AS race
     FROM clean.entries GROUP BY dedupe_id);

@@ -1,7 +1,3 @@
-# Ignore data and config directories
-data
-config
-
 # Ignore sensitive drake outputs
 drake.log
 .drake/

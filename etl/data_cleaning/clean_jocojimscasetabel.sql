@@ -1,4 +1,3 @@
-drop view if exists clean.jocojimscasetable_view;
 create or replace view
 clean.jocojimscasetable_view
 as (
@@ -13,8 +12,7 @@ from public.jocojims2casedata as cd
 left join public.jocojims2casehearingpart1 as chp1 on cd.case_no = chp1.case_no
 );
 
-drop table if exists
-    clean.jocojimscasetable;
+drop table if exists clean.jocojimscasetable cascade;
 create table
     clean.jocojimscasetable
 as

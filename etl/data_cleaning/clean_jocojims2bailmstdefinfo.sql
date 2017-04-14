@@ -1,13 +1,3 @@
-/* to replace the whole view, drop it before
- * creating the new view. Run the script
- * removing the regular expression for '--'.
- * Otherwise, it will try to create a new view
- * or update an old view without dropping.
- */
---drop view if exists clean.jocojims2bailmstdefinfo_view;
-drop view if exists clean.jocojims2bailmstdefinfo_view;
-
-
 /* Create view to present cleaned data.
  * This view makes the following changes:
  *
@@ -76,8 +66,7 @@ as (
 /* drop the existing table and replace with a table
  * created from the view.
  */
-drop table if exists
-    clean.jocojims2bailmstdefinfo;
+drop table if exists clean.jocojims2bailmstdefinfo cascade;
 create table
     clean.jocojims2bailmstdefinfo
 as

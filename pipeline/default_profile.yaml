@@ -1,13 +1,15 @@
-
-db_connection_config_path: "/mnt/data/criminal_justice/johnson_county_ddj/config/db_default_profile.json"
-DBSETUP: "pipeline/default_profile.yaml"
+# this is the path to the database profile containing login information
+db_connection_config_path: "config/db_default_profile.json"
+s3_connection_config_path: "config/s3_profile.json"
 
 #########################
 #    Table names        #
 #########################
 
+# name of id column shared across all db tables for individuals
 id_column: "dedupe_id"
 
+# And then a listing of all the source tables we use
 jimsperson: "clean.jocojims2nameindexdata"
 ems: "clean.jocoems_hashed"
 mental_health: "clean.jocomentalhealth_hashed"
@@ -21,10 +23,9 @@ jimsbail: "clean.jocojimsbailtable"
 jimscase: "clean.jocojimscasetable"
 individuals: "clean.individuals"
 
-
-
-
+# table to save models and predictions in
 models: models
 predictions: predictions
 
+# schema where feature tables will be saved
 feature_schema: feature_tables

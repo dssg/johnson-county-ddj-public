@@ -19,7 +19,7 @@ import logging
 
 engine, config_db = setup_environment.get_database()
 
-def main(s3_profile, config_file_name, feature_timestamp, discard_models):
+def main(config_file_name, feature_timestamp, discard_models):
     """Replaces template placeholder with values.
 
     :param config_file_name: path to config yaml file
@@ -42,7 +42,7 @@ def main(s3_profile, config_file_name, feature_timestamp, discard_models):
     except:
         log.exception("could not load config file")
 
-
+    s3_profile = setup_environment.get_config_file()['s3_connection_config_path']
 
     labels = []
     for label_key in config['labelling'].keys():
@@ -70,22 +70,16 @@ if __name__ == "__main__":
     this path to the main method above
     """
     parser = argparse.ArgumentParser()
-    parser.add_argument("s3_profile", type = str,
-                        help = "pass config path for s3 pickle storage",
-                        default = ("/mnt/data/criminal_justice/"
-                                   "johnson_county_ddj/config/"
-                                   "s3_profile.json"))
-    parser.add_argument("config", type = str, help = "pass your model config",
-                        default="yamls/default_sample.yaml")
+    parser.add_argument("config", type = str, help = "pass your model config")
     parser.add_argument("feature_timestamp", type = str,
                         help = ("pass a timestamp if you want to use a specific"
-                                " feature table set or pass a wildcard (%) to "
+                                " feature table set or pass a wildcard (%%) to "
                                 "use the most recent feature tables."),
-                        default = "%")
+                        default = "%", nargs = '?')
     parser.add_argument("discard_models", type = bool,
                         help = ("Should models be automatically discarded at "
                                 "cleanup?"),
                         default = False, nargs = '?')
     args = parser.parse_args()
-    main(args.s3_profile, args.config, args.feature_timestamp,
+    main(args.config, args.feature_timestamp,
          args.discard_models)

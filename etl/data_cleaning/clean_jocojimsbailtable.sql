@@ -1,4 +1,3 @@
-drop view if exists clean.jocojimsbailtable_view;
 create or replace view
     clean.jocojimsbailtable_view
 as (
@@ -55,8 +54,7 @@ on
     mdet.bail_no = mdef.bail_no
 );
 
-drop table if exists
-    clean.jocojimsbailtable;
+drop table if exists clean.jocojimsbailtable cascade;
 create table
     clean.jocojimsbailtable
 as

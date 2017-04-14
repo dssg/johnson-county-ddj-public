@@ -12,7 +12,7 @@ etl/clean_schema.touch <- [-timecheck]
 ; Run all the cleaning sql scripts
 etl/data_cleaning.touch <- etl/data_cleaning, etl/clean_schema.touch
 	for filename in $[INPUT]/*.sql; do
-		psql -v ON_ERROR_STOP=1 -f "$filename"
+		psql -v ON_ERROR_STOP=1 -f "$filename" || exit 1
 	done && touch $[OUTPUT]
 
 ; Run superdeduper! TODO: split these steps out into their own drakefile in etl/dedupe?

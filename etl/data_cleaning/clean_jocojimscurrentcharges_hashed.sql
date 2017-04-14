@@ -1,13 +1,3 @@
-/* to replace the whole view, drop it before
- * creating the new view. Run the script
- * removing the regular expression for '--'.
- * Otherwise, it will try to create a new view
- * or update an old view without dropping.
- */
---drop view if exists premodeling.jocojimscurrentcharges_hashed_view;
-drop view if exists clean.jocojimscurrentcharges_hashed_view;
-
-
 /* Create view to present cleaned data.
  * This view makes the following changes:
  *
@@ -92,8 +82,7 @@ as (
 
 /* drop the existing table and replace with a table
  * created from the view. */
-drop table if exists
-    clean.jocojimscurrentcharges_hashed;
+drop table if exists clean.jocojimscurrentcharges_hashed cascade;
 create table
     clean.jocojimscurrentcharges_hashed
 as

@@ -1,5 +1,3 @@
-drop view if exists clean.jocomentalhealthdischarges_view;
-
 create or replace view
     clean.jocomentalhealthdischarges_view
 as (
@@ -15,7 +13,7 @@ from (
 /* drop the existing table and replace with a table
  * created from the view.
  */
-drop table if exists clean.jocomentalhealthdischarges;
+drop table if exists clean.jocomentalhealthdischarges cascade;
 create table
     clean.jocomentalhealthdischarges
 as

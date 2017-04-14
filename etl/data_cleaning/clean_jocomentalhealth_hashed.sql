@@ -1,5 +1,3 @@
-drop view if exists clean.jocomentalhealth_hashed_view;
-
 create or replace view
     clean.jocomentalhealth_hashed_view
 as (
@@ -61,8 +59,7 @@ from (
 /* drop the existing table and replace with a table
  * created from the view.
  */
-drop table if exists
-    clean.jocomentalhealth_hashed;
+drop table if exists clean.jocomentalhealth_hashed cascade;
 create table
     clean.jocomentalhealth_hashed
 as

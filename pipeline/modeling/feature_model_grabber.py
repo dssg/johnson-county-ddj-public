@@ -45,13 +45,13 @@ class FeatureModelGrabber():
         if feature_timestamp == '%':
             feature_timestamp = pd.read_sql('''
                 SELECT
-                    split_part(table_name, '_', 6) || '_' || split_part(table_name, '_', 7)
+                    split_part(table_name, '_at_', 2)
                 FROM
                     information_schema.tables
                 WHERE
                     table_schema = 'feature_tables'
                 ORDER BY
-                    table_name desc
+                    1 desc
                 LIMIT
                     1;
             ''', con).iat[0,0]
@@ -584,7 +584,7 @@ class FeatureModelGrabber():
         with open(config_db['db_connection_config_path']) as f:
             db_vals = json.load(f)
         for k,v in db_vals.items():
-            os.environ['PG' + k.upper()] = v if v else ""
+            os.environ['PG' + k.upper()] = str(v) if v else ""
 
         # copy file contents to table
         os.system("""

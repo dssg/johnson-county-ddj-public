@@ -1,12 +1,3 @@
-/* to replace the whole view, drop it before
- * creating the new view. Run the script
- * removing the regular expression '--'.
- * Otherwise, it will try to create a new view
- * or update an old view without dropping.
- */
-drop view if exists clean.jocoems_hashed_view;
-
-
 /* Create view to present cleaned data.
  * This view makes the following changes:
  *
@@ -186,7 +177,7 @@ as
 /* drop the existing table and replace with a table
  * created from the view.
  */
-drop table if exists clean.jocoems_hashed;
+drop table if exists clean.jocoems_hashed cascade;
 create table
     clean.jocoems_hashed
 as

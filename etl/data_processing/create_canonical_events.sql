@@ -27,12 +27,14 @@ UNION ALL
     booking.bk_dt AS begin_date,
     booking.rel_date AS end_date
    FROM clean.jocojims2inmatedata booking
+   WHERE (booking.dedupe_id IS NOT NULL)
 UNION ALL
  SELECT booking.dedupe_id,
     'booking'::text AS event,
     booking.bk_dt AS begin_date,
     booking.rel_date AS end_date
    FROM clean.jocojims2juvinmatedata booking
+   WHERE (booking.dedupe_id IS NOT NULL)
   ORDER BY 1, 3
 );
 

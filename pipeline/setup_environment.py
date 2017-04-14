@@ -11,7 +11,7 @@ import logging
 def get_database(config_file_name='pipeline/default_profile.yaml'):
     try:
         logging.debug('going to try to load connection')
-        engine, dbconf = get_connection_from_profile(config_file_name)
+        engine = get_connection_from_profile(config_file_name)
     except IOError:
         #add log statement
         print('Setup-Environment: IOError')
@@ -49,30 +49,7 @@ def get_connection_from_profile(config_file_name = "pipeline/default_profile.yam
     with open(vals['db_connection_config_path']) as f:
         db_config = json.load(f)
         engine = create_engine('postgres://', connect_args=db_config)
-    
 
-    if 'DBSETUP' not in vals.keys():
-        raise Exception('Point to PD database config file')
-
-
-    return engine, vals['DBSETUP']
-
-    
-
-    if 'DBSETUP' not in vals.keys():
-        raise Exception('Point to PD database config file')
-
-
-    return engine, vals['DBSETUP']
-
-
-def get_engine(db, user, host, port, passwd):
-    url = 'postgresql://{user}:{passwd}@{host}:{port}/{db}'.format(
-                    user=user, passwd=passwd, host=host, port=port, db=db)
-
-    logging.debug(url)
-
-    engine = create_engine(url)
     return engine
 
 def close_engine(engine):
