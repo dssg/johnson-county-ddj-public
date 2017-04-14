@@ -35,7 +35,7 @@ create or replace view
     clean.jocojimsjailbooking_hashed_view
 as (
     select
-        mni_no as mni_no,
+        mni_no::int as mni_no,
         trim(both ' ' from case_no) as case_no,
         substring(case_no, '[JDCVR]+') as case_type,
         booking_no as booking_no,

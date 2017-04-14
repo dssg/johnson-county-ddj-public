@@ -2,7 +2,7 @@ drop view if exists clean.jocojimscasetable_view;
 create or replace view
 clean.jocojimscasetable_view
 as (
-select cd.case_no, cd.mni_id as mni_no,
+select cd.case_no, cd.mni_id::int as mni_no,
 substring(cd.case_no from '[A-Z][A-Z]') as case_type,
 case
     when char_length(substring(regexp_replace(chp1.court_date, '[^0-9]', '', 'g') from 1 for 8)) < 8

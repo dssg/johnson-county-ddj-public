@@ -23,7 +23,7 @@ as (
 select
     prob_no as prob_no,
     court_case as court_case,
-    mni as mni_no,
+    mni::int as mni_no,
     city as city,
     case
         when st = ' ' then null

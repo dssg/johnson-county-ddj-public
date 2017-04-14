@@ -51,7 +51,7 @@ as (
         zip_code as zip_code,
         prt as prt,
         amt_tendered as amt_tendered,
-        mni_id as mni_no,
+        mni_id::int as mni_no,
         gcvalidity as gcvalidity,
         gcsrctbl as gcsrctbl,
         gcscore as gcscore,

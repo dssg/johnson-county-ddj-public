@@ -36,7 +36,7 @@ create or replace view
     clean.jocojimscurrentcharges_hashed_view
 as (
     select
-        mni_no as mni_no,
+        mni_no::int as mni_no,
         trim(both ' ' from case_no) as case_no,
         substring(case_no, '[JDCVR]+') as case_type,
         upper(charge_code) as charge_code,

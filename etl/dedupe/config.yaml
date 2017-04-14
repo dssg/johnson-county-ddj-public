@@ -1,0 +1,41 @@
+# Schema for Dedupe's tables:
+schema: dedupe
+# The source table to dedupe:
+table: clean.entries
+# The column in the source table that is the key
+key: entry_id
+# The fields to use as evidence of a duplicate row and their comparison operator:
+fields:
+    -   field: hash_ssn
+        type: Exact
+        has missing: true
+    -   field: hash_fname
+        type: Exact
+        has missing: true
+    -   field: hash_lname
+        type: Exact
+        has missing: true
+    -   field: dob
+        type: String
+        has missing: true
+    -   field: race
+        type: Categorical
+        has missing: true
+        categories: [ASIAN, OTHER RACE, WHITE, AMERICAN INDIAN OR ALASKA NATIVE,
+                     BLACK OR AFRICAN AMERICAN, NATIVE HAWAIIAN OR OTHER PACIFIC ISLANDER]
+    -   field: sex
+        type: Categorical
+        has missing: true
+        categories: [MALE, FEMALE]
+    -   field: block2010id
+        type: Exact
+        has missing: true
+filter_condition: hash_lname is not null AND (hash_ssn is not null OR (hash_fname is not null AND dob is not null))
+interactions:
+    - [hash_lname, dob]
+    - [hash_lname, hash_fname]
+    - [hash_ssn, dob]
+merge_exact:
+    - [hash_fname, hash_lname, dob]
+    - [hash_lname, hash_ssn]
+    - [known_linked_entry_id]

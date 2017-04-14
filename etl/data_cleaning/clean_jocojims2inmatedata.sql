@@ -122,7 +122,7 @@ as (
         end as bonding,
         arr_location as arr_location,
         b_state as b_state,
-        mni as mni_no,
+        mni::int as mni_no,
         location as location,
         license_state as license_state,
         veh_lic__ as veh_lic__,

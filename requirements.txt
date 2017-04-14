@@ -20,8 +20,7 @@ certifi==2016.9.26
 collate==0.1.0
 cycler==0.10.0
 decorator==4.0.10
-dedupe==1.4.15
-dedupe-hcluster==0.3.2
+dedupe==1.6.5
 docutils==0.13.1
 enum34==1.1.6
 fastcluster==1.1.23
@@ -61,6 +60,7 @@ simplegeneric==0.8.1
 simplejson==3.10.0
 singledispatch==3.4.0.3
 six==1.10.0
+superdeduper==0.1.6
 tables==3.3.0
 tornado==4.4.2
 tqdm==4.8.3

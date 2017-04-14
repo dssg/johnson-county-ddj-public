@@ -1,54 +1,34 @@
-CLEANINGFILES:=etl/data_cleaning
-
-; Unzip the latest datasource
-/mnt/data/johnson_county/raw/jocodssg.sql <- /mnt/data/johnson_county/raw/jocodssg_08042016.zip
-	unzip $[INPUT] -d /mnt/data/johnson_county/raw  && touch $[OUTPUT]
+; Unzip the latest datasource. The output filename must be contained inside the zipfile.
+data/jocodssg.sql <- data/jocodssg_08042016.zip
+	unzip -o $[INPUT] $(basename "$[OUTPUT]") -d data && touch $[OUTPUT]
 
 ; Restore the sql dump to the postgres database
-/mnt/data/johnson_county/raw/drake_checkfiles/jocodssg_upload <- /mnt/data/johnson_county/raw/jocodssg.sql
-	psql -f $[INPUT0] && touch $[OUTPUT]
+data/jocodssg_upload.touch <- data/jocodssg.sql [method:psql]
+
+; Create the clean schema
+etl/clean_schema.touch <- [-timecheck]
+	psql -c 'create schema if not exists clean;' && touch $[OUTPUT]
 
 ; Run all the cleaning sql scripts
-/mnt/data/johnson_county/raw/drake_checkfiles/jocojimsperson_hashed <- $[CLEANINGFILES]/clean_jocojimsperson_hashed.sql
-	psql -f $[INPUT0] && touch $[OUTPUT]
+etl/data_cleaning.touch <- etl/data_cleaning, etl/clean_schema.touch
+	for filename in $[INPUT]/*.sql; do
+		psql -v ON_ERROR_STOP=1 -f "$filename"
+	done && touch $[OUTPUT]
 
-/mnt/data/johnson_county/raw/drake_checkfiles/jocojimsjailbooking_hashed <- $[CLEANINGFILES]/clean_jocojimsjailbooking_hashed.sql
-	psql -f $[INPUT0] && touch $[OUTPUT]
+; Run superdeduper! TODO: split these steps out into their own drakefile in etl/dedupe?
+; Create an entries table:
+etl/dedupe/entries.touch <- etl/dedupe/entries.sql, etl/data_cleaning.touch [method:psql]
 
-/mnt/data/johnson_county/raw/drake_checkfiles/jocojimscurrentcharges_hashed <- $[CLEANINGFILES]/clean_jocojimscurrentcharges_hashed.sql
-	psql -f $[INPUT0] && touch $[OUTPUT]
+; Run superdeduper
+etl/dedupe/dedupe.touch <- etl/dedupe/config.yaml, etl/dedupe/entries.touch
+	superdeduper --config $[INPUT0] --db config/db_default_profile.json && touch $[OUTPUT]
 
-/mnt/data/johnson_county/raw/drake_checkfiles/jocojims2bailmstdefinfo <- $[CLEANINGFILES]/clean_jocojims2bailmstdefinfo.sql
-	psql -f $[INPUT0] && touch $[OUTPUT]
+; Add columns to the clean tables with the dedupe_id
+etl/dedupe/apply_results.touch <- etl/dedupe/apply_results.py, etl/dedupe/dedupe.touch
+	python $[INPUT0] config/db_default_profile.json && touch $[OUTPUT]
 
-/mnt/data/johnson_county/raw/drake_checkfiles/jocojims2inmatedata <- $[CLEANINGFILES]/clean_jocojims2inmatedata.sql
-	psql -f $[INPUT0] && touch $[OUTPUT]
-
-/mnt/data/johnson_county/raw/drake_checkfiles/jocojims2juvinmatedata <- $[CLEANINGFILES]/clean_jocojims2juvinmatedata.sql
-	psql -f $[INPUT0] && touch $[OUTPUT]
-
-/mnt/data/johnson_county/raw/drake_checkfiles/jocojims2nameindexdata <- $[CLEANINGFILES]/clean_jocojims2nameindexdata.sql
-	psql -f $[INPUT0] && touch $[OUTPUT]
-
-/mnt/data/johnson_county/raw/drake_checkfiles/jocojims2probation <- $[CLEANINGFILES]/clean_jocojims2probation.sql
-	psql -f $[INPUT0] && touch $[OUTPUT]
-
-/mnt/data/johnson_county/raw/drake_checkfiles/jocomentalhealth_hashed <- $[CLEANINGFILES]/clean_jocomentalhealth_hashed.sql
-	psql -f $[INPUT0] && touch $[OUTPUT]
-
-/mnt/data/johnson_county/raw/drake_checkfiles/jocomentalhealthdiagnoses <- $[CLEANINGFILES]/clean_jocomentalhealthdiagnoses.sql
-	psql -f $[INPUT0] && touch $[OUTPUT]
-
-/mnt/data/johnson_county/raw/drake_checkfiles/jocomentalhealthdischarges <- $[CLEANINGFILES]/clean_jocomentalhealthdischarges.sql
-	psql -f $[INPUT0] && touch $[OUTPUT]
-
-/mnt/data/johnson_county/raw/drake_checkfiles/jocomentalhealthservices <- $[CLEANINGFILES]/clean_jocomentalhealthservices.sql
-	psql -f $[INPUT0] && touch $[OUTPUT]
-
-/mnt/data/johnson_county/raw/drake_checkfiles/jocorsitriage_hashed <- $[CLEANINGFILES]/clean_jocorsitriage_hashed.sql
-	psql -f $[INPUT0] && touch $[OUTPUT]
-
-/mnt/data/johnson_county/raw/drake_checkfiles/jocoems_hashed <- $[CLEANINGFILES]/clean_jocoems_hashed.sql
-	psql -f $[INPUT0] && touch $[OUTPUT]
-
-
+; Run all the derived processing scripts
+etl/data_processing.touch <- etl/data_processing, etl/dedupe/apply_results.touch
+	for filename in $[INPUT]/*.sql; do
+		psql -v ON_ERROR_STOP=1 -f "$filename"
+	done && touch $[OUTPUT]

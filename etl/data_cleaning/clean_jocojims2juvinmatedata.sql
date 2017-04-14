@@ -126,7 +126,7 @@ as (
         b_state as b_state,
         unused as unused,
         religion as religion,
-        mni as mni_no,
+        mni::int as mni_no,
         stored_impound as stored_impound,
         location as location,
         relationship as relationship,

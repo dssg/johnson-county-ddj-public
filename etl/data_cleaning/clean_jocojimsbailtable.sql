@@ -19,7 +19,7 @@ select
         else
             to_date(substring(regexp_replace(hdet.receipt_date, '[^0-9]', '', 'g') from 1 for 8), 'YYYYMMDD')
     end as receipt_date,
-    hdef.mni_id as mni_no,
+    hdef.mni_id::int as mni_no,
     hdef.booking_ as booking_no
 from
     jocojims2bailhstdefinfo as hdef
@@ -45,7 +45,7 @@ select
         else
             to_date(substring(regexp_replace(mdet.receipt_date, '[^0-9]', '', 'g') from 1 for 8), 'YYYYMMDD')
     end as receipt_date,
-    mdef.mni_id as mni_no,
+    mdef.mni_id::int as mni_no,
     mdef.booking_ as booking_no
 from
     jocojims2bailmstdefinfo as mdef
