@@ -1,0 +1,6 @@
+{"key":"FAKEKEYYSYOGDAXONPQP",
+"secret_key":"FaKeS3cRe7/WfVEgUub45pD8POnNbaM4LQEkiJcZ",
+"pickle_bucket_name":"bucket-for-python-pickles",
+"hdf_bucket_name":"bucket-for-hdf5-files",
+"folder":"foldername",
+"region":"us-west-2"}

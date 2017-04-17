@@ -15,7 +15,8 @@ pilot: False
 # Temporal parameters           #
 #################################
 
-start_date: '01Jan2010'
+feature_start_date: '01Jan1973'
+labeling_start_date: '01Jan2010'
 autogen_fake_today: False
 
 fake_today: ['01Jan2015']
@@ -39,17 +40,30 @@ labelling:
   jims_mh_ems_jims: True
   jims_mh__ems__jims: True
 
+label_types:
+  ems_jims: 'binary'
+  mh_jims: 'binary'
+  ems_mh_jims: 'binary'
+  ems_ems: 'binary'
+  mh_ems: 'binary'
+  ems_mh: 'binary'
+  jims_mh_jims: 'binary'
+  jims_jims: 'binary'
+  anything_jims: 'binary'
+  jims_mh_ems_jims: 'binary'
+  jims_mh__ems__jims: 'binary'
+
 #################################
 # Feature Selection             #
 #################################
 test_feature_group_combinations: False
 
-feature_groups: ['basic','service_counts', 'last_week_service_counts',
+feature_groups: ['basic', 'service_counts', 'last_week_service_counts',
                  'last_year_service_counts', 'last_year_service_days',
                  'ems_features' , 'lengths_between_events',
                  'last_month_service_counts', 'intersections_services',
                  'age_interaction', 'mental_health_features', 'rsi_features',
-                 'jims_features', 'sequence_exists' ]
+                 'jims_features']
 
 features:
   basic:
@@ -156,26 +170,6 @@ features:
     rsi_num_transported_by: True
 
   sequence_exists:
-    booking_ems_booking_730: True
-    ems_ems_730: True
-    booking_mh_730: True
-    booking_booking_booking_booking_730: True
-    booking_ems_730: True
-    ems_booking_730: True
-    mh_booking_730: True
-    booking_booking_730: True
-    booking_booking_booking_730: True
-    ems_booking_booking_365: True
-    booking_ems_ems_365: True
-    ems_ems_booking_365: True
-    booking_booking_mh_365: True
-    mh_booking_booking_365: True
-    booking_mh_booking_365: True
-    ems_booking_booking_365: True
-    booking_booking_ems_365: True
-    booking_booking_booking_booking_365: True
-    booking_booking_booking_365: True
-    booking_ems_booking_365: True
     booking_ems_365: True
     ems_ems_ems_365: True
     ems_mh_365: True
@@ -186,9 +180,6 @@ features:
     booking_booking_365: True
     ems_ems_ems_ems_365: True
     mh_booking_365: True
-    booking_booking_booking_182: True
-    ems_booking_ems_182: True
-    booking_ems_booking_182: True
     ems_ems_182: True
     ems_booking_182: True
     booking_ems_182: True

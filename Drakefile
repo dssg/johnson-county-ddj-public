@@ -2,7 +2,7 @@
 psql()
 	psql -v ON_ERROR_STOP=1 -f $[INPUT] && touch $[OUTPUT]
 
-PROFILE:=config/default_profile.txt
-%include $[PROFILE]
+; Print the database configuration as shell variables to make psql simple
+$(python config/echo_json_as_vars.py config/db_default_profile.json)
 
 %include etl/Drakefile
